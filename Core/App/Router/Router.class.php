@@ -3,6 +3,7 @@
 namespace Router;
 
 use Controller\MainCtrl;
+// use Middleware; /* Opcional */
 
 class Router {
 
@@ -19,8 +20,10 @@ class Router {
     }
 
     public function resolve() {
-        $method = strtolower($this->server['REQUEST_METHOD']); // obtiene método solicitado: GET o POST
+        // $checkLogin = new Middleware;
+        $method = \strtolower($this->server['REQUEST_METHOD']); // obtiene método solicitado: GET o POST
         $path = $this->request->getPath($this->server['REQUEST_URI']); // obtiene URI
+        // $checkLogin->usersOnly();
         if (is_array($path)) { // la ruta obtenida es un array (ruta dinámica)
             $routeParameters = isset($this->routeList[$method][$path[0]]) ? $this->routeList[$method][$path[0]] : false; // existe la ruta?
             if ($routeParameters !== false) {
@@ -36,17 +39,17 @@ class Router {
         } else { // la ruta obtenida es una función (pseudoruta función)
             $routeParameters = isset($this->routeList[$method][$path]) ? $this->routeList[$method][$path] : false;
             if ($routeParameters != false) { // revisa si es nulo
-                if (is_callable($routeParameters[0])) { // revisa si ruta es función
-                    call_user_func($routeParameters[0]);
+                if (\is_callable($routeParameters[0])) { // revisa si ruta es función
+                    \call_user_func($routeParameters[0]);
                     exit;
                 }
             }
         }
         if ($routeParameters === false) { // la ruta obtenida no existe
             $status = 404;
-            http_response_code($status);
+            \http_response_code($status);
             return $this->maincontroller->fetchErrorController($status);
-        } elseif (is_string($routeParameters[0])) { // la ruta obtenida es un string (ruta estática)
+        } elseif (\is_string($routeParameters[0])) { // la ruta obtenida es un string (ruta estática)
             return $this->maincontroller->fetchController($routeParameters, $method);
         }
     }

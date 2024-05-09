@@ -6,7 +6,7 @@ RewriteEngine On
 
 # 301 de /index a /
 RewriteCond %{THE_REQUEST} ^.*/index
-RewriteRule ^(.*)index$ /prod/pyme2/ [R=301,L] 
+RewriteRule ^(.*)index$ /ej/php/liteframework/ [R=301,L] 
 
 # Detenerse en /Public
 RewriteRule ^Public/ - [L]

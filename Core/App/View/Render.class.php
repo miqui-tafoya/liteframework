@@ -7,13 +7,13 @@ abstract class Render {
     public function renderView($view, $layout, $metaParams, $bodyParams = [], $responseParams = [], $js = []) {
         $layoutContent = $this->layoutContent($layout);
         $viewContent = $this->viewContent($view, $bodyParams, $responseParams);
-        $viewCookiebar = $this->viewCookiebar();
+        // $viewCookiebar = $this->viewCookiebar();
         $viewJs = $this->viewJs($js);
         switch ($layout) {
             case 'admin-main':
             case 'user-main':
                 $viewUMeta = $this->viewUMeta($metaParams);
-                $viewModal = $this->viewModal();
+                // $viewModal = $this->viewModal();
                 $viewUNav = $this->viewUNav();
                 $viewFooter = $this->viewFooter();
                 $templates = [$viewUMeta, $viewUNav, $viewContent, $viewFooter, $viewJs];
@@ -21,7 +21,7 @@ abstract class Render {
                 break;
             case 'main':
                 $viewMeta = $this->viewMeta($metaParams);
-                $viewModal = $this->viewModal();
+                // $viewModal = $this->viewModal();
                 $viewNav = $this->viewNav();
                 $viewFooter = $this->viewFooter();
                 $templates = [$viewMeta, $viewNav, $viewContent, $viewFooter, $viewJs];
